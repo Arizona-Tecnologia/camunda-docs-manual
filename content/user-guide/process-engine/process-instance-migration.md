@@ -164,7 +164,7 @@ instance state is preserved when migration is executed.
 
 In addition to manually specifying all migration instructions, the `MigrationPlanBuilder`
 is able to generate migration instructions for all *equal* activities in the source
-and targer process definitions. This can reduce the effort for creating a migration
+and target process definitions. This can reduce the effort for creating a migration
 to only those activities that are not equal.
 
 Equality of a pair of activities is defined as follows:
@@ -190,7 +190,7 @@ MigrationPlan migrationPlan = processEngine.getRuntimeService()
   .build();
 ```
 
-It creates generates migration instructions for the equal activities
+It creates generated migration instructions for the equal activities
 `assessCreditWorthiness`. It adds an additional mapping for `validateAddress` to `validateProcessAddress`.
 
 
@@ -218,7 +218,7 @@ Migration of a process instance follows these steps:
 1. Assignment of migration instructions to activity instances
 2. Validation of the instruction assignment
 3. Cancellation of unmapped activity instances
-4. Migration of mapped activity instances and their dependent instancess,
+4. Migration of mapped activity instances and their dependent instances,
   and instantiation of newly introduced BPMN scopes
 
 
@@ -273,6 +273,7 @@ in the activity instance tree and its execution representation. Furthermore, it 
 * Task instances (for user tasks)
 
 **Variable instances**: Variable instances are migrated when they are local to a scope
+
 **Task instances**: Task instance migration updates activity and process definition references.
 It does not re-initialize the task. For example, if the target activity has a different
 assignee configured, a migrated task instance does not receive this assignee.
@@ -293,7 +294,7 @@ the following requirements:
 
 * It has to map activities of the same type
 * It has to map activities of the supported types
-* It has to be a one-to-one mapping
+* It has to be an one-to-one mapping
 
 If validation reports errors, migration fails with a `MigrationPlanValidationException`
 providing a `MigrationPlanValidationReport` object with details on the
@@ -331,5 +332,5 @@ The activity instance for `Validate Address` is a child of `Assess Credit Worthi
 describe the path from an activity instance to the root activity instance. For `Validate Adress`, this is
 `Validate Address -> Assess Credit Worthiness -> ProcessInstance`. *Vertical* migration means that after migration, the order
 of the migrated instances must still be the same with respect to this path. For example, the `Validate Address` instance must be migrated into
-an activity that is a decendant of the activity that the `Assess Credit Worthiness` instance is migrated into. Note that this definition
+an activity that is a descendant of the activity that the `Assess Credit Worthiness` instance is migrated into. Note that this definition
 allows to add and remove sub process scopes because these do not change the order of the activity instances in the path.
